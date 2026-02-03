@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from app.models import Aluguel, Veiculo, Cliente
+from app.models import Aluguel, Veiculo, Cliente, Manutencao, Pagamento
 from app import db
 from datetime import datetime, date
 

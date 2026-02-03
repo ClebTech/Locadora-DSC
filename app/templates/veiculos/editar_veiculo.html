@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Editar Veículo - Locadora DSC{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 600px; margin: 20px auto; padding: 25px;">
+    <h2> Editar Veículo: {{ veiculo.modelo }}</h2>
+    <hr style="margin-bottom: 20px; opacity: 0.2;">
+
+    <form action="{{ url_for('veiculos.editar', id=veiculo.id) }}" method="POST">
+        <div class="form-group" style="margin-bottom: 15px;">
+            <label>Fabricante:</label>
+            <input type="text" name="fabricante" value="{{ veiculo.fabricante }}" required class="form-control" style="width: 100%; padding: 8px;">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 15px;">
+            <label>Modelo:</label>
+            <input type="text" name="modelo" value="{{ veiculo.modelo }}" required class="form-control" style="width: 100%; padding: 8px;">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+            <div class="form-group">
+                <label>Placa:</label>
+                <input type="text" name="placa" value="{{ veiculo.placa }}" readonly class="form-control" style="width: 100%; padding: 8px; background-color: #f9f9f9;">
+                <small>A placa não pode ser alterada.</small>
+            </div>
+            <div class="form-group">
+                <label>Status Atual:</label>
+                <select name="status" class="form-control" style="width: 100%; padding: 8px;">
+                    <option value="Disponível" {{ 'selected' if veiculo.status == 'Disponível' }}>Disponível</option>
+                    <option value="Alugado" {{ 'selected' if veiculo.status == 'Alugado' }}>Alugado</option>
+                    <option value="Manutenção" {{ 'selected' if veiculo.status == 'Manutenção' }}>Manutenção</option>
+                </select>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+            <div class="form-group">
+                <label>Cor:</label>
+                <input type="text" name="cor" value="{{ veiculo.cor }}" class="form-control" style="width: 100%; padding: 8px;">
+            </div>
+            <div class="form-group">
+                <label>Tipo:</label>
+                <select name="tipo" class="form-control" style="width: 100%; padding: 8px;">
+                    <option value="Sedan" {{ 'selected' if veiculo.tipo == 'Sedan' }}>Sedan</option>
+                    <option value="Hatch" {{ 'selected' if veiculo.tipo == 'Hatch' }}>Hatch</option>
+                    <option value="SUV" {{ 'selected' if veiculo.tipo == 'SUV' }}>SUV</option>
+                    <option value="Picape" {{ 'selected' if veiculo.tipo == 'Picape' }}>Picape</option>
+                </select>
+            </div>
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+            <button type="submit" class="btn btn-primary" style="flex: 2;">Atualizar Dados</button>
+            <a href="{{ url_for('veiculos.listar') }}" class="btn" style="flex: 1; text-align: center; background: #eee; text-decoration: none; color: #333; line-height: 2.5; border-radius: 4px;">Voltar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

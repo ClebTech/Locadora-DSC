@@ -6,7 +6,11 @@
 <div class="container">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
         <h2>Frota de Veículos</h2>
-        <a href="{{ url_for('veiculos.cadastrar') }}" class="btn btn-primary">+ Novo Veículo</a>
+        
+        {# HIERARQUIA: Apenas Administrador e Mecânico podem ver o botão de cadastrar #}
+        {% if current_user.nivel in ['Administrador', 'Mecânico'] %}
+            <a href="{{ url_for('veiculos.novo') }}" class="btn btn-primary">+ Novo Veículo</a>
+        {% endif %}
     </div>
 
     <div class="card" style="padding: 0; overflow: hidden;">
@@ -18,14 +22,16 @@
                     <th>Placa</th>
                     <th>Ano</th>
                     <th>Status</th>
-                    <th>Ações</th>
+                    {% if current_user.nivel in ['Administrador', 'Mecânico'] %}
+                        <th>Ações</th>
+                    {% endif %}
                 </tr>
             </thead>
             <tbody>
                 {% for veiculo in veiculos %}
                 <tr>
                     <td>{{ veiculo.id }}</td>
-                    <td><strong>{{ veiculo.marca }}</strong> {{ veiculo.modelo }}</td>
+                    <td><strong>{{ veiculo.fabricante }}</strong> {{ veiculo.modelo }}</td>
                     <td>{{ veiculo.placa }}</td>
                     <td>{{ veiculo.ano }}</td>
                     <td>
@@ -33,9 +39,19 @@
                             {{ veiculo.status }}
                         </span>
                     </td>
+                    
+                    {# HIERARQUIA: Apenas Administrador e Mecânico veem as colunas de ação #}
+                    {% if current_user.nivel in ['Administrador', 'Mecânico'] %}
                     <td>
-                        <a href="#" style="color: var(--primary-color); text-decoration: none;">Editar</a>
+                        <a href="{{ url_for('veiculos.editar', id=veiculo.id) }}" style="color: var(--primary-color); text-decoration: none; font-weight: bold;">Editar</a>
+                        
+                        {% if current_user.nivel == 'Administrador' %}
+                        <a href="{{ url_for('veiculos.excluir', id=veiculo.id) }}" 
+                           onclick="return confirm('Deseja realmente remover este veículo da frota?')"
+                           style="color: #dc3545; text-decoration: none; font-weight: bold; margin-left: 10px;">Excluir</a>
+                        {% endif %}
                     </td>
+                    {% endif %}
                 </tr>
                 {% else %}
                 <tr>

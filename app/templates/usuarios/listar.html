@@ -1,22 +1,52 @@
 {% extends 'base.html' %}
 
+{% block title %}Gestão de Usuários - Locadora DSC{% endblock %}
+
 {% block content %}
-<h2>Usuários</h2>
+<div class="container" style="margin-top: 30px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+        <h2 style="margin: 0;"> Gestão de Usuários</h2>
+        <a href="{{ url_for('usuarios.criar') }}" class="btn btn-primary" style="padding: 10px 25px;">
+            + Novo Usuário
+        </a>
+    </div>
 
-<a href="{{ url_for('usuarios.criar') }}">Novo Usuário</a>
-
-<table border="1">
-    <tr>
-        <th>Nome</th>
-        <th>Login</th>
-        <th>Nível</th>
-    </tr>
-    {% for u in usuarios %}
-    <tr>
-        <td>{{ u.nome }}</td>
-        <td>{{ u.login }}</td>
-        <td>{{ u.nivel }}</td>
-    </tr>
-    {% endfor %}
-</table>
+    <div class="card" style="padding: 0; overflow: hidden; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+        <table style="width: 100%; border-collapse: collapse; background-color: white;">
+            <thead style="background-color: #001a23; color: white;">
+                <tr>
+                    <th style="padding: 15px; text-align: left;">Nome</th>
+                    <th style="padding: 15px; text-align: left;">Login</th>
+                    <th style="padding: 15px; text-align: left;">Nível de Acesso</th>
+                    <th style="padding: 15px; text-align: center;">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in usuarios %}
+                <tr style="border-bottom: 1px solid #eee;">
+                    <td style="padding: 15px;">{{ u.nome }}</td>
+                    <td style="padding: 15px;"><code>{{ u.login }}</code></td>
+                    <td style="padding: 15px;">
+                        <span class="badge" style="
+                            background-color: {{ '#007bff' if u.nivel == 'Administrador' else '#6c757d' }}; 
+                            color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.85rem;">
+                            {{ u.nivel }}
+                        </span>
+                    </td>
+                    <td style="padding: 15px; text-align: center;">
+                        <a href="#" style="color: #007bff; text-decoration: none; margin-right: 15px; font-weight: bold;">Editar</a>
+                        <a href="#" style="color: #dc3545; text-decoration: none; font-weight: bold;">Excluir</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4" style="padding: 30px; text-align: center; color: #666;">
+                        Nenhum usuário cadastrado no sistema.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}

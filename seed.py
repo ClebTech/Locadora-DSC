@@ -10,27 +10,24 @@ def seed_database():
         db.drop_all()
         db.create_all()
         
-        # 1. Criar Usuário Administrador (Nível deve ser 'Administrador')
         admin = Usuario(
             nome='Administrador Murphy',
             cpf='000.000.000-01',
             email='admin@email.com',
             login='admin',
             senha='123',
-            nivel='Administrador', # Deve ser exatamente como no Enum do models.py
+            nivel='Administrador', 
             salario=5000.00
         )
         
-        # 2. Criar Cliente (Precisa de CPF e CNH obrigatórios)
         cliente = Cliente(
             nome='João da Silva',
             cpf='111.111.111-11',
-            cnh='12345678910', # Campo obrigatório no seu models
+            cnh='12345678910', 
             email='joao@email.com',
             telefone='(11) 98888-8888'
         )
         
-        # 3. Criar Veículo (Campos modelo e placa são obrigatórios)
         veiculo = Veiculo(
             modelo='Corolla',
             fabricante='Toyota',

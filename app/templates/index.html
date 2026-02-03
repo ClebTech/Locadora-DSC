@@ -1,16 +1,46 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
-{% block title %}Página Inicial - Locadora{% endblock %}
+{% block title %}Dashboard - Locadora DSC{% endblock %}
 
 {% block content %}
-<div class="card" style="text-align: center; margin-top: 50px;">
-    <h1>🚗 Sistema de Aluguel de Veículos</h1>
-    <p>A infraestrutura foi configurada com sucesso por <strong>Murphy</strong>!</p>
-    <hr>
-    <p>O banco de dados MySQL está conectado e as tabelas foram criadas.</p>
-    <div style="margin-top: 20px;">
-        <a href="/usuarios" class="btn btn-primary">Gerenciar Usuários</a>
-        <a href="/veiculos" class="btn btn-primary" style="background-color: #28a745;">Ver Frota</a>
+<div class="container" style="margin-top: 30px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+        <h2>📊 Painel de Controle Administrativo</h2>
+        <span style="color: #666;">Bem-vindo(a), <strong>{{ current_user.nome }}</strong></span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+        
+        <div style="padding: 20px; background: white; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-top: 5px solid #007bff;">
+            <p style="color: #888; margin: 0; font-weight: bold; text-transform: uppercase; font-size: 0.8rem;">Total de Clientes</p>
+            <h2 style="margin: 10px 0; font-size: 2.5rem; color: #333;">{{ stats.total_clientes }}</h2>
+            <a href="{{ url_for('clientes.listar') }}" style="text-decoration: none; font-size: 0.9rem; color: #007bff;">Gerenciar Clientes →</a>
+        </div>
+
+        <div style="padding: 20px; background: white; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-top: 5px solid #28a745;">
+            <p style="color: #888; margin: 0; font-weight: bold; text-transform: uppercase; font-size: 0.8rem;">Frota Disponível</p>
+            <h2 style="margin: 10px 0; font-size: 2.5rem; color: #333;">{{ stats.veiculos_disponiveis }}</h2>
+            <a href="{{ url_for('veiculos.listar') }}" style="text-decoration: none; font-size: 0.9rem; color: #28a745;">Ver Veículos →</a>
+        </div>
+
+        <div style="padding: 20px; background: white; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-top: 5px solid #ffc107;">
+            <p style="color: #888; margin: 0; font-weight: bold; text-transform: uppercase; font-size: 0.8rem;">Aluguéis Ativos</p>
+            <h2 style="margin: 10px 0; font-size: 2.5rem; color: #333;">{{ stats.veiculos_alugados }}</h2>
+            <a href="{{ url_for('alugueis.historico') }}" style="text-decoration: none; font-size: 0.9rem; color: #ffc107;">Ver Histórico →</a>
+        </div>
+
+        <div style="padding: 20px; background: white; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-top: 5px solid #17a2b8;">
+            <p style="color: #888; margin: 0; font-weight: bold; text-transform: uppercase; font-size: 0.8rem;">Receita Total</p>
+            <h2 style="margin: 10px 0; font-size: 2.5rem; color: #333;">R$ {{ "%.2f"|format(stats.faturamento_total) }}</h2>
+            <span style="font-size: 0.9rem; color: #17a2b8;">Soma de Contratos + Multas</span>
+        </div>
+    </div>
+
+    <div style="margin-top: 40px; padding: 20px; background: #f8f9fa; border-radius: 10px; text-align: center;">
+        <h4 style="margin-bottom: 20px;">Acesso Rápido</h4>
+        <a href="{{ url_for('alugueis.novo') }}" class="btn btn-primary" style="padding: 10px 25px; margin: 5px;"> Novo Aluguel</a>
+        <a href="{{ url_for('clientes.cadastrar') }}" class="btn btn-outline-primary" style="padding: 10px 25px; margin: 5px;"> Novo Cliente</a>
+        <a href="{{ url_for('veiculos.novo') }}" class="btn btn-outline-success" style="padding: 10px 25px; margin: 5px;"> Novo Veículo</a>
     </div>
 </div>
 {% endblock %}
