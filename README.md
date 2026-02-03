@@ -1,22 +1,38 @@
 # Locadora DSC
 
-Este é o módulo de gerenciamento de locação de veículos. O sistema utiliza uma arquitetura distribuída com Flask e MySQL para gerenciar usuários, clientes, veículos e contratos de aluguel.
+*Este é o módulo de gerenciamento de locação de veículos. O sistema utiliza uma arquitetura distribuída com Flask e MySQL para gerenciar usuários, clientes, veículos e contratos de aluguel.*
 
 ## Sobre o Projeto
 
-Este sistema trata-se de uma refatoração e migração do projeto **[Locadora DSC](https://github.com/WallanMelo/Desenvolvimento-De-Sistemas-Corporativos-DSC-)**, originalmente escrito em Java.
+Sistema de gerenciamento para locação de veículos desenvolvido para a disciplina de Arquitetura de Software. O projeto consiste na refatoração de um sistema legado  **[Locadora DSC](https://github.com/WallanMelo/Desenvolvimento-De-Sistemas-Corporativos-DSC-)** em Java para uma arquitetura moderna e distribuída utilizando Python, Flask e MySQL. 
 
-**Principais Mudanças:**
-* **Tecnologia:** Migração de Java para Python/Flask com foco em alta disponibilidade.
-* **Arquitetura:** Implementação do padrão *Application Factory* e *Blueprints*.
-* **Banco de Dados:** Uso de MySQL para persistência robusta.
+## Arquitetura e Tecnologias
+
+*O projeto utiliza o padrão Factory Pattern para inicialização da aplicação e Blueprints para modularização das rotas, garantindo escalabilidade e organização do código.*
+
+* **Backend:** Flask (Python 3.12).
+* **Banco de Dados:** MySQL com SQLAlchemy ORM.
+* **Autenticação:** Flask-Login.
+* **Frontend:** Jinja2 Templates & CSS3.
+
+
+## Controle de Acesso (RBAC)
+
+*O sistema implementa uma matriz de permissões baseada em níveis de acesso (Role-Based Access Control) para garantir a integridade dos dados:*
+
+| Módulo | Administrador | Atendente | Mecânico |
+| :--- | :--- | :--- | :--- |
+| **Usuários** | Total | 🚫 | 🚫 |
+| **Clientes** | Total | Criar/Listar | 🚫 |
+| **Veículos** | Total | Listar | Editar/Criar |
+| **Aluguéis** | Total | Operacional | 🚫 |
 
 
 ---
 
 ## Como Rodar o Projeto
 
-Você pode executar o projeto usando o gerenciador de pacotes padrão (`pip/venv`):
+*Você pode executar o projeto usando o gerenciador de pacotes padrão (`pip/venv`):*
 
 ### 1: Configuração do Ambiente
 
@@ -36,12 +52,11 @@ python3 -m venv .venv
 pip install -r requirements.txt
 ```
 
-
 ---
 
 ## Configuração da Infraestrutura
 
-Diferente da versão original, utilizamos scripts personalizados para garantir que o banco de dados MySQL reflita exatamente o *models.py*.
+*Diferente da versão original, utilizamos scripts personalizados para garantir que o banco de dados MySQL reflita exatamente o *models.py*.*
 
 1. Configuração da URI:
 ```bash
@@ -79,7 +94,7 @@ python run.py
 
 | Integrante | Funções Principais | GitHub |
 | :--- | :--- | :--- |
-| **Geovana Rodrigues** | Arquitetura Modular, Modelagem de Dados, Automação de Ambiente e Persistência e Status | [@murphiie](https://github.com/murphiie) |
-| **Clebson Santos** | Regras de Negócio, Gestão Operacional, Fluxo Financeiro e Relatórios e Inteligência | [@ClebTech](https://github.com/ClebTech) |
+| **Geovana Rodrigues** | Arquitetura Modular, Modelagem de Dados, Automação de Ambiente e Persistência e Status | *[@murphiie](https://github.com/murphiie)* |
+| **Clebson Santos** | Regras de Negócio, Gestão Operacional, Fluxo Financeiro e Relatórios | *[@ClebTech](https://github.com/ClebTech)* |
 
 
